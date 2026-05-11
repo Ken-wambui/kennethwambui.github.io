@@ -14,10 +14,10 @@
 
 /* ═══════════════════════ CONFIG ═══════════════════════ */
 const CONFIG = {
-  name: 'Ken Wambui',
+  name: 'KEN WAMBUI',
   role: 'PCB Design Engineer & Mechatronics Engineer',
   subtitle: 'High-Speed PCB Design · UAV Systems · Embedded Firmware',
-  tagline: `Specialized PCB Design Engineer based in <span>Nairobi, Kenya</span> — with a proven record designing
+  tagline: `Specialized PCB Design Engineer based in <span>Kiambu, Limuru: Kenya</span> — with a proven record designing
     high-speed, impedance-controlled, multi-layer PCBs for UAV, IoT, industrial, and consumer applications.
     From schematic capture to DFM-ready Gerber output.`,
   profilePhoto: 'assets/images/profile.jpg',
@@ -27,7 +27,7 @@ const CONFIG = {
   linkedin: { label: 'Ken Wambui', url: 'https://www.linkedin.com/in/ken-wambui-b8051918a/' },
   github:   { label: 'Ken-wambui', url: 'https://github.com/Ken-wambui' },
   fiverr:   { label: 'Hire on Fiverr', url: 'https://www.fiverr.com/s/LdjrrKa' },
-  location: 'Nairobi, Kenya · Remote OK',
+  location: 'Kiambu, Kenya · Remote OK',
 
   /* ── FORMSPREE SETUP ──────────────────────────────────────
      1. Go to https://formspree.io and sign up (free)
@@ -59,7 +59,7 @@ const experienceData = [
   {
     period: '2025 – 2026',
     role: 'Electronics Hardware Engineer',
-    company: 'Ailwing Drones Limited — Nairobi, Kenya',
+    company: 'Ailwing Drones Limited — Tamil Nandu, India',
     desc: 'Designed flight controller PCBs and ESC hardware for commercial drone applications. Developed ArduPilot integration, custom sensor fusion pipelines, and autonomous flight systems.',
   },
   {
@@ -1056,7 +1056,7 @@ function renderContact() {
       <div class="contact-grid">
         <div class="contact-info">
           <h3>Available for Projects</h3>
-          <p>Whether you need a full-time electronics engineer or a specialist for your next hardware project, I'm open to both. Based in Nairobi — working globally.</p>
+          <p>Whether you need a full-time electronics engineer or a specialist for your next hardware project, I'm open to both. Based in Kenya — working globally.</p>
           <div class="clink-list">
             <a href="mailto:${CONFIG.email}" class="clink">
               <div class="clink-icon">✉</div>
