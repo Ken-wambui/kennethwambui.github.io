@@ -17,7 +17,7 @@ const CONFIG = {
   name: 'KEN WAMBUI',
   role: 'PCB Design Engineer & Mechatronics Engineer',
   subtitle: 'High-Speed PCB Design · UAV Systems · Embedded Firmware',
-  tagline: `Specialized PCB Design Engineer based in <span>Kiambu, Limuru: Kenya</span> — with a proven record designing
+  tagline: `Specialized PCB Design Engineer based in <span> Limuru, Kenya</span> — with a proven record designing
     high-speed, impedance-controlled, multi-layer PCBs for UAV, IoT, industrial, and consumer applications.
     From schematic capture to DFM-ready Gerber output.`,
   profilePhoto: 'assets/images/profile.jpg',
@@ -36,11 +36,11 @@ const CONFIG = {
      4. Paste it below replacing YOUR_FORM_ID
      That's it — submissions will arrive in your email inbox.
   ──────────────────────────────────────────────────────── */
-  formspreeId: 'YOUR_FORM_ID',
+  formspreeId: 'xjgljrlv',
 
   stats: [
-    { num: '2+', label: 'Years Experience' },
-    { num: '15+', label: 'PCBs Designed' },
+    { num: '1+', label: 'Years Experience' },
+    { num: '20+', label: 'PCBs Designed' },
     { num: '4',   label: 'Companies Served' },
     { num: '∞',   label: 'Coffee Consumed' },
   ],
