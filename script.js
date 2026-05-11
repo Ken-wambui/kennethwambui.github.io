@@ -811,7 +811,7 @@ function renderAbout() {
           <div class="degree-badge">
             <span class="degree-badge-icon">🎓</span>
             <div class="degree-badge-text">
-              <strong>BEng (Hons) Mechatronics Engineering</strong>
+              <strong>BSc. Mechatronics Engineering</strong>
               Dedan Kimathi University of Technology — Nyeri, Kenya
             </div>
           </div>
