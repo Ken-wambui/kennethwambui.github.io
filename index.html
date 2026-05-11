@@ -1,815 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ken Wambui | PCB Design Engineer & Mechatronics Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #020817; --surface: #0a1628; --surface2: #0f1f3d;
-      --cyan: #00d4ff; --green: #00ff9f; --orange: #ff6b35;
-      --text: #e2e8f0; --muted: #4a6080;
-      --border: rgba(0,212,255,0.15);
-      --glow-cyan: 0 0 20px rgba(0,212,255,0.4);
-      --glow-green: 0 0 20px rgba(0,255,159,0.4);
-    }
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03)1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03)1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-    body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08)2px,rgba(0,0,0,0.08)4px);pointer-events:none;z-index:0}
-
-    /* NAV */
-    nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(2,8,23,0.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-    .nav-logo{font-family:'Orbitron',sans-serif;font-size:.95rem;font-weight:700;color:var(--cyan);text-decoration:none;letter-spacing:.08em}
-    .nav-logo span{color:var(--green)}
-    .nav-links{display:flex;gap:24px;list-style:none}
-    .nav-links a{color:var(--muted);text-decoration:none;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-family:'Share Tech Mono',monospace;transition:color .2s}
-    .nav-links a:hover{color:var(--cyan)}
-
-    /* LAYOUT */
-    section{position:relative;z-index:1}
-    .section-wrap{max-width:1200px;margin:0 auto;padding:100px 48px}
-    .section-header{margin-bottom:60px}
-    .section-tag{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--green);letter-spacing:.25em;text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:14px}
-    .section-tag::before{content:'';width:24px;height:1px;background:var(--green)}
-    .section-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;line-height:1.1}
-    .section-title span{color:var(--cyan)}
-
-    /* HERO */
-    #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 48px 80px;max-width:1200px;margin:0 auto}
-    .hero-tag{font-family:'Share Tech Mono',monospace;font-size:.78rem;color:var(--green);letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:12px}
-    .hero-tag::before{content:'';width:32px;height:1px;background:var(--green)}
-    .hero-name{font-family:'Orbitron',sans-serif;font-size:clamp(2.5rem,6.5vw,6rem);font-weight:900;line-height:1;letter-spacing:-.02em;margin-bottom:10px}
-    .hero-name .glitch{position:relative;color:var(--text)}
-    .hero-name .glitch::before,.hero-name .glitch::after{content:attr(data-text);position:absolute;inset:0}
-    .hero-name .glitch::before{color:var(--cyan);clip-path:polygon(0 30%,100% 30%,100% 50%,0 50%);animation:glitch1 4s infinite;transform:translateX(-2px)}
-    .hero-name .glitch::after{color:var(--orange);clip-path:polygon(0 65%,100% 65%,100% 80%,0 80%);animation:glitch2 4s infinite;transform:translateX(2px)}
-    @keyframes glitch1{0%,90%,100%{opacity:0}92%,96%{opacity:1;transform:translateX(-4px)}94%{transform:translateX(2px)}}
-    @keyframes glitch2{0%,88%,100%{opacity:0}90%,95%{opacity:1;transform:translateX(4px)}93%{transform:translateX(-2px)}}
-    .hero-subtitle{font-family:'Orbitron',sans-serif;font-size:clamp(.85rem,1.8vw,1.3rem);font-weight:400;color:var(--cyan);margin-bottom:24px;letter-spacing:.05em}
-    .hero-desc{font-size:.98rem;color:var(--muted);max-width:600px;line-height:1.8;margin-bottom:44px}
-    .hero-desc span{color:var(--text)}
-    .hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
-    .btn-primary{padding:13px 30px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);font-family:'Share Tech Mono',monospace;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s;position:relative;overflow:hidden}
-    .btn-primary::before{content:'';position:absolute;inset:0;background:var(--cyan);transform:translateX(-101%);transition:transform .3s;z-index:-1}
-    .btn-primary:hover{color:var(--bg);box-shadow:var(--glow-cyan)}
-    .btn-primary:hover::before{transform:translateX(0)}
-    .btn-secondary{padding:13px 30px;background:transparent;border:1px solid var(--muted);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s}
-    .btn-secondary:hover{border-color:var(--green);color:var(--green);box-shadow:var(--glow-green)}
-    .hero-stats{display:flex;gap:44px;margin-top:64px;padding-top:44px;border-top:1px solid var(--border);flex-wrap:wrap}
-    .hero-stat-num{font-family:'Orbitron',sans-serif;font-size:1.9rem;font-weight:700;color:var(--cyan)}
-    .hero-stat-num span{color:var(--green)}
-    .hero-stat-label{font-size:.68rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:4px;font-family:'Share Tech Mono',monospace}
-
-    /* ABOUT */
-    .about-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:72px;align-items:start}
-    .about-photo-placeholder{width:100%;aspect-ratio:3/4;background:var(--surface2);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:.78rem;position:relative;overflow:hidden}
-    .about-photo-placeholder::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,255,0.05)0%,transparent 60%)}
-    .about-photo-placeholder svg{width:56px;height:56px;opacity:.3}
-    .corner{position:absolute;width:22px;height:22px;border-color:var(--cyan);border-style:solid}
-    .corner-tl{top:-1px;left:-1px;border-width:2px 0 0 2px}
-    .corner-tr{top:-1px;right:-1px;border-width:2px 2px 0 0}
-    .corner-bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px}
-    .corner-br{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
-    .about-content p{color:var(--muted);line-height:1.9;margin-bottom:16px;font-size:.93rem}
-    .about-content p span{color:var(--text)}
-    .degree-badge{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--surface2);border:1px solid rgba(0,255,159,.2);border-left:3px solid var(--green);margin-bottom:22px}
-    .degree-badge-icon{font-size:1.5rem;flex-shrink:0}
-    .degree-badge-text{font-size:.82rem;line-height:1.5;color:var(--text)}
-    .degree-badge-text strong{display:block;color:var(--green);font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.1em;margin-bottom:3px}
-    .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:28px}
-    .skill-tag{padding:8px 13px;background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--cyan);font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--text)}
-
-    /* CORE SKILLS */
-    .core-skills-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1}
-    .core-skills-wrap{max-width:1200px;margin:0 auto;padding:64px 48px}
-    .core-skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;margin-top:44px}
-    .core-skill-group h4{font-family:'Orbitron',sans-serif;font-size:.72rem;font-weight:600;color:var(--cyan);letter-spacing:.12em;margin-bottom:14px;text-transform:uppercase}
-    .core-skill-item{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--muted);padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px}
-    .core-skill-item::before{content:'▸';color:var(--green);font-size:.6rem;flex-shrink:0}
-
-    /* SERVICES */
-    #services{background:rgba(10,22,40,.5)}
-    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1px;background:var(--border);border:1px solid var(--border)}
-    .service-card{background:var(--bg);padding:34px 26px;position:relative;overflow:hidden;transition:background .3s;cursor:pointer}
-    .service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--green));transform:scaleX(0);transform-origin:left;transition:transform .4s}
-    .service-card:hover{background:var(--surface)}
-    .service-card:hover::before{transform:scaleX(1)}
-    .service-click-hint{position:absolute;bottom:18px;right:18px;font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--muted);opacity:0;transition:opacity .3s}
-    .service-card:hover .service-click-hint{opacity:1}
-    .service-icon{font-size:1.9rem;margin-bottom:16px;display:block}
-    .service-num{position:absolute;top:20px;right:20px;font-family:'Orbitron',sans-serif;font-size:.62rem;color:var(--muted)}
-    .service-title{font-family:'Orbitron',sans-serif;font-size:.92rem;font-weight:600;color:var(--text);margin-bottom:10px}
-    .service-desc{font-size:.86rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
-    .service-tags{display:flex;flex-wrap:wrap;gap:5px}
-    .service-tag-item{font-family:'Share Tech Mono',monospace;font-size:.62rem;padding:3px 7px;border:1px solid rgba(0,212,255,.2);color:var(--cyan)}
-
-    /* PROJECTS */
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:22px}
-    .project-card{background:var(--surface);border:1px solid var(--border);position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;cursor:pointer}
-    .project-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 0 1px rgba(0,212,255,.3)}
-    .project-image{height:175px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    .project-image-pattern{position:absolute;inset:0;opacity:.15}
-    .project-badge{position:absolute;top:11px;right:11px;padding:3px 9px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);font-family:'Share Tech Mono',monospace;font-size:.62rem;color:var(--cyan);letter-spacing:.1em}
-    .project-icon-big{font-size:2.8rem;position:relative;z-index:1}
-    .project-body{padding:20px}
-    .project-title{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.3}
-    .project-desc{font-size:.82rem;color:var(--muted);line-height:1.7;margin-bottom:12px}
-    .project-techs{display:flex;flex-wrap:wrap;gap:5px}
-    .tech-chip{font-family:'Share Tech Mono',monospace;font-size:.62rem;padding:3px 7px;background:rgba(0,255,159,.05);border:1px solid rgba(0,255,159,.2);color:var(--green)}
-    .project-more-hint{margin-top:12px;padding-top:11px;border-top:1px solid var(--border);font-family:'Share Tech Mono',monospace;font-size:.66rem;color:var(--cyan);letter-spacing:.08em;display:flex;align-items:center;gap:6px}
-    .project-more-hint::after{content:'→';transition:transform .2s}
-    .project-card:hover .project-more-hint::after{transform:translateX(6px)}
-
-    /* RESUME */
-    #resume{background:rgba(10,22,40,.5)}
-    .resume-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:72px}
-    .timeline{position:relative}
-    .timeline::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:var(--border)}
-    .timeline-item{padding-left:26px;margin-bottom:40px;position:relative}
-    .timeline-item::before{content:'';position:absolute;left:-4px;top:8px;width:9px;height:9px;background:var(--cyan);border:2px solid var(--bg);box-shadow:0 0 10px var(--cyan)}
-    .timeline-period{font-family:'Share Tech Mono',monospace;font-size:.68rem;color:var(--green);letter-spacing:.1em;margin-bottom:5px}
-    .timeline-role{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:3px}
-    .timeline-company{font-size:.82rem;color:var(--cyan);margin-bottom:9px}
-    .timeline-desc{font-size:.82rem;color:var(--muted);line-height:1.7}
-    .skills-panel h3{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:20px}
-    .skill-bar-wrap{margin-bottom:16px}
-    .skill-bar-label{display:flex;justify-content:space-between;margin-bottom:6px}
-    .skill-bar-name,.skill-bar-pct{font-family:'Share Tech Mono',monospace;font-size:.7rem}
-    .skill-bar-pct{color:var(--cyan)}
-    .skill-bar-track{height:3px;background:var(--surface2);overflow:hidden}
-    .skill-bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));box-shadow:0 0 8px var(--cyan);width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
-
-    /* BLOG */
-    .blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px}
-    .blog-card{background:var(--surface);border:1px solid var(--border);padding:28px;transition:border-color .3s,box-shadow .3s;cursor:pointer}
-    .blog-card:hover{border-color:rgba(0,212,255,.4);box-shadow:var(--glow-cyan)}
-    .blog-date{font-family:'Share Tech Mono',monospace;font-size:.68rem;color:var(--green);letter-spacing:.15em;margin-bottom:12px}
-    .blog-title{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.4}
-    .blog-excerpt{font-size:.82rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
-    .blog-read-more{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--cyan);display:flex;align-items:center;gap:8px}
-    .blog-read-more::after{content:'→';transition:transform .2s}
-    .blog-card:hover .blog-read-more::after{transform:translateX(6px)}
-
-    /* CONTACT */
-    #contact{background:rgba(10,22,40,.5)}
-    .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:72px;align-items:start}
-    .contact-info h3{font-family:'Orbitron',sans-serif;font-size:1.05rem;color:var(--text);margin-bottom:16px}
-    .contact-info p{font-size:.9rem;color:var(--muted);line-height:1.8;margin-bottom:32px}
-    .contact-links{display:flex;flex-direction:column;gap:10px}
-    .contact-link{display:flex;align-items:center;gap:13px;color:var(--text);text-decoration:none;font-size:.86rem;padding:13px;border:1px solid var(--border);transition:border-color .3s,color .3s}
-    .contact-link:hover{border-color:var(--cyan);color:var(--cyan)}
-    .contact-link-icon{width:32px;height:32px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-family:'Share Tech Mono',monospace;font-size:.68rem;font-weight:700;color:var(--cyan);flex-shrink:0}
-    .contact-link-meta{display:flex;flex-direction:column}
-    .contact-link-label{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
-    .contact-form{display:flex;flex-direction:column;gap:16px}
-    .form-group{display:flex;flex-direction:column;gap:6px}
-    .form-label{font-family:'Share Tech Mono',monospace;font-size:.66rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
-    .form-input,.form-textarea{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:12px 14px;font-family:'Exo 2',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;resize:vertical}
-    .form-input:focus,.form-textarea:focus{border-color:var(--cyan)}
-    .form-input::placeholder,.form-textarea::placeholder{color:var(--muted)}
-    .form-textarea{min-height:120px}
-    .form-submit{padding:14px 30px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);font-family:'Share Tech Mono',monospace;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s;position:relative;overflow:hidden}
-    .form-submit::before{content:'';position:absolute;inset:0;background:var(--cyan);transform:translateY(101%);transition:transform .3s;z-index:0}
-    .form-submit:hover{color:var(--bg);box-shadow:var(--glow-cyan)}
-    .form-submit:hover::before{transform:translateY(0)}
-    .form-submit span{position:relative;z-index:1}
-
-    /* FOOTER */
-    footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:32px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
-    .footer-brand{font-family:'Orbitron',sans-serif;font-size:.88rem;color:var(--cyan);letter-spacing:.08em}
-    .footer-copy{font-family:'Share Tech Mono',monospace;font-size:.66rem;color:var(--muted)}
-
-    /* ANIMATIONS */
-    .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
-    .reveal.visible{opacity:1;transform:translateY(0)}
-    #particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-    .particle{position:absolute;width:2px;height:2px;border-radius:50%;animation:float linear infinite;opacity:0}
-    @keyframes float{0%{transform:translateY(100vh);opacity:0}10%{opacity:.6}90%{opacity:.6}100%{transform:translateY(-20px);opacity:0}}
-
-    /* ══════ MODAL SYSTEM ══════ */
-    .modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(2,8,23,.95);backdrop-filter:blur(8px);display:flex;align-items:stretch;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .35s ease}
-    .modal-overlay.open{opacity:1;pointer-events:all}
-    .modal-panel{width:min(720px,100vw);height:100vh;background:var(--surface);border-left:1px solid var(--border);overflow-y:auto;transform:translateX(60px);transition:transform .4s cubic-bezier(.4,0,.2,1);scrollbar-width:thin;scrollbar-color:var(--cyan) transparent}
-    .modal-overlay.open .modal-panel{transform:translateX(0)}
-    .modal-close{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:18px 26px;background:rgba(10,22,40,.96);border-bottom:1px solid var(--border);backdrop-filter:blur(8px)}
-    .modal-close-tag{font-family:'Share Tech Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
-    .modal-close-btn{width:34px;height:34px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s}
-    .modal-close-btn:hover{border-color:var(--cyan);color:var(--cyan)}
-    .modal-body{padding:36px 32px}
-
-    /* Gallery */
-    .modal-gallery{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:32px}
-    .gallery-slot{aspect-ratio:16/10;background:var(--surface2);border:1px dashed rgba(0,212,255,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:.6rem;text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:border-color .2s}
-    .gallery-slot:hover{border-color:rgba(0,212,255,.5)}
-    .gallery-slot:first-child{grid-column:1/-1;aspect-ratio:16/7}
-    .gallery-slot-icon{font-size:1.6rem;opacity:.3}
-    .gallery-slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
-    .gallery-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-
-    /* Modal content */
-    .modal-title{font-family:'Orbitron',sans-serif;font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:7px}
-    .modal-subtitle{font-size:.84rem;color:var(--cyan);margin-bottom:22px;font-family:'Share Tech Mono',monospace;letter-spacing:.06em}
-    .modal-desc{font-size:.9rem;color:var(--muted);line-height:1.85;margin-bottom:28px}
-    .modal-desc span{color:var(--text)}
-    .modal-section-label{font-family:'Orbitron',sans-serif;font-size:.72rem;font-weight:600;color:var(--cyan);letter-spacing:.15em;text-transform:uppercase;margin-bottom:13px;margin-top:28px;padding-bottom:7px;border-bottom:1px solid var(--border)}
-    .modal-specs{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-    .modal-spec{padding:11px 13px;background:var(--bg);border:1px solid var(--border)}
-    .modal-spec-label{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-    .modal-spec-value{font-size:.86rem;color:var(--text);font-weight:500}
-    .modal-checklist{display:flex;flex-direction:column;gap:7px}
-    .modal-check{display:flex;align-items:flex-start;gap:10px;font-size:.84rem;color:var(--muted);line-height:1.5}
-    .modal-check::before{content:'✓';color:var(--green);font-family:'Share Tech Mono',monospace;font-size:.78rem;flex-shrink:0;margin-top:1px}
-    .modal-tags-row{display:flex;flex-wrap:wrap;gap:7px}
-    .modal-tag{font-family:'Share Tech Mono',monospace;font-size:.66rem;padding:4px 11px;border:1px solid rgba(0,212,255,.25);color:var(--cyan)}
-    .modal-tag-green{border-color:rgba(0,255,159,.25);color:var(--green)}
-    .modal-deliverable{display:flex;align-items:flex-start;gap:11px;padding:11px;background:var(--bg);border:1px solid var(--border);margin-bottom:7px}
-    .modal-deliverable-icon{font-size:.95rem;flex-shrink:0;margin-top:2px}
-    .modal-deliverable-text{font-size:.82rem;color:var(--muted);line-height:1.5}
-    .modal-deliverable-text strong{display:block;color:var(--text);font-size:.84rem;margin-bottom:2px}
-
-    @media(max-width:768px){
-      nav{padding:13px 18px}.nav-links{display:none}
-      #hero{padding:96px 22px 56px}
-      .section-wrap{padding:64px 22px}
-      .about-grid,.resume-grid,.contact-grid{grid-template-columns:1fr;gap:36px}
-      footer{padding:26px 22px}
-      .modal-gallery{grid-template-columns:1fr}
-      .modal-gallery .gallery-slot:first-child{grid-column:1}
-      .modal-specs{grid-template-columns:1fr}
-      .modal-body{padding:24px 20px}
-    }
-  </style>
+  <meta name="description" content="Ken Wambui — Specialized PCB Design Engineer and Mechatronics Engineer based in Nairobi, Kenya."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+  <!-- ── BACKGROUND ── -->
   <div id="particles"></div>
 
-  <nav>
-    <a href="#hero" class="nav-logo">KEN WAMBUI<span>.</span></a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#resume">Resume</a></li>
-      <li><a href="#blog">Blog</a></li>
-      <li><a href="#contact">Contact</a></li>
+  <!-- ── NAV ── -->
+  <nav id="main-nav">
+    <a class="nav-logo" onclick="switchPage('home')">KEN WAMBUI<span>.</span></a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a class="nav-btn active" data-page="home">Home</a></li>
+      <li><a class="nav-btn" data-page="about">About</a></li>
+      <li><a class="nav-btn" data-page="services">Services</a></li>
+      <li><a class="nav-btn" data-page="projects">Projects</a></li>
+      <li><a class="nav-btn" data-page="resume">Resume</a></li>
+      <li><a class="nav-btn" data-page="certifications">Certifications</a></li>
+      <li><a class="nav-btn" data-page="blog">Blog</a></li>
+      <li><a class="nav-btn" data-page="contact">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-tag">PCB Design Engineer · Mechatronics Engineer · Firmware Developer</div>
-    <div class="hero-name"><span class="glitch" data-text="KEN WAMBUI">KEN WAMBUI</span></div>
-    <div class="hero-subtitle">High-Speed PCB Design · UAV Systems · Embedded Firmware</div>
-    <p class="hero-desc">
-      <span>Specialized PCB Design Engineer</span> based in <span>Nairobi, Kenya</span> — with a proven record designing
-      high-speed, impedance-controlled, multi-layer PCBs for UAV, IoT, industrial, and consumer applications.
-      From schematic capture to DFM-ready Gerber output.
-    </p>
-    <div class="hero-ctas">
-      <a href="#projects" class="btn-primary"><span>⬡</span> View Projects</a>
-      <a href="#contact" class="btn-secondary">⟶ Hire Me</a>
-    </div>
-    <div class="hero-stats">
-      <div><div class="hero-stat-num">5<span>+</span></div><div class="hero-stat-label">Years Experience</div></div>
-      <div><div class="hero-stat-num">20<span>+</span></div><div class="hero-stat-label">PCBs Designed</div></div>
-      <div><div class="hero-stat-num">3<span>+</span></div><div class="hero-stat-label">Companies Served</div></div>
-      <div><div class="hero-stat-num">∞</div><div class="hero-stat-label">Coffee Consumed</div></div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-wrap">
-      <div class="about-grid reveal">
-        <div>
-          <div class="about-photo-placeholder">
-            <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-            <div class="corner corner-bl"></div><div class="corner corner-br"></div>
-            <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="22" r="12" stroke="#00d4ff" stroke-width="1.5"/><path d="M10 54c0-12.15 9.85-22 22-22s22 9.85 22 22" stroke="#00d4ff" stroke-width="1.5"/></svg>
-            <span>[ ADD PHOTO ]</span>
-          </div>
-        </div>
-        <div class="about-content">
-          <div class="section-header">
-            <div class="section-tag">01 // About</div>
-            <h2 class="section-title">PCB Design Engineer<br><span>from Nairobi</span></h2>
-          </div>
-          <div class="degree-badge">
-            <span class="degree-badge-icon">🎓</span>
-            <div class="degree-badge-text">
-              <strong>BEng (Hons) Mechatronics Engineering</strong>
-              Dedan Kimathi University of Technology — Nyeri, Kenya
-            </div>
-          </div>
-          <p>Specialized PCB Design Engineer and Mechatronics Engineer with a proven record designing <span>high-speed, impedance-controlled, multi-layer PCBs</span> for UAV, IoT, industrial, and consumer applications.</p>
-          <p>Proficient in <span>Altium Designer</span> and <span>KiCad</span> across the full hardware development lifecycle — from schematic capture through DFM-ready Gerber output. Deep practical expertise in <span>signal integrity, power integrity, EMI/EMC mitigation</span>, mixed-signal design, and high-speed interfaces (HDMI, USB 3.2, CAN-FD, CSI).</p>
-          <p>With experience at <span>Ailwing Drones Limited</span> and <span>AfrifabriLabs / ZeroBionics</span>, I've led end-to-end hardware design on flight controllers, agricultural IoT, and industrial systems. Equally capable in embedded firmware (ESP32 / STM32, FreeRTOS) to validate and bring up custom hardware.</p>
-          <div class="skills-grid">
-            <div class="skill-tag">KiCad / Altium Designer</div>
-            <div class="skill-tag">STM32 / ESP32 / FreeRTOS</div>
-            <div class="skill-tag">Signal & Power Integrity</div>
-            <div class="skill-tag">EMI/EMC Mitigation</div>
-            <div class="skill-tag">HDMI 2.0 / USB 3.2 Gen2</div>
-            <div class="skill-tag">CAN-FD / MIPI CSI-2</div>
-            <div class="skill-tag">SolidWorks / Inventor</div>
-            <div class="skill-tag">ArduPilot / PX4</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CORE SKILLS -->
-  <div class="core-skills-section">
-    <div class="core-skills-wrap">
-      <div class="section-tag">Core Competencies</div>
-      <h2 class="section-title" style="font-size:clamp(1.4rem,3vw,2rem)">Technical <span>Skill Stack</span></h2>
-      <div class="core-skills-grid">
-        <div class="core-skill-group">
-          <h4>PCB Design</h4>
-          <div class="core-skill-item">Layout &amp; Routing</div>
-          <div class="core-skill-item">Schematic Capture</div>
-          <div class="core-skill-item">Multi-layer Design</div>
-          <div class="core-skill-item">Impedance Control</div>
-          <div class="core-skill-item">DFM / DFA Review</div>
-          <div class="core-skill-item">Stack-up Design</div>
-        </div>
-        <div class="core-skill-group">
-          <h4>High-Speed Interfaces</h4>
-          <div class="core-skill-item">HDMI 2.0</div>
-          <div class="core-skill-item">USB 3.2 Gen2 (10 Gbps)</div>
-          <div class="core-skill-item">CAN-FD</div>
-          <div class="core-skill-item">MIPI CSI-2</div>
-          <div class="core-skill-item">DDR / LPDDR</div>
-          <div class="core-skill-item">PCIe</div>
-        </div>
-        <div class="core-skill-group">
-          <h4>Power Electronics</h4>
-          <div class="core-skill-item">Buck / Boost Converters</div>
-          <div class="core-skill-item">LDO Design</div>
-          <div class="core-skill-item">USB PD (100W)</div>
-          <div class="core-skill-item">Motor Drive / ESC</div>
-          <div class="core-skill-item">TVS / ESD Protection</div>
-        </div>
-        <div class="core-skill-group">
-          <h4>SI / PI / EMC</h4>
-          <div class="core-skill-item">Differential Pair Routing</div>
-          <div class="core-skill-item">Return Path Management</div>
-          <div class="core-skill-item">Decoupling Strategy</div>
-          <div class="core-skill-item">EMI Filtering</div>
-          <div class="core-skill-item">Ground Plane Design</div>
-        </div>
-        <div class="core-skill-group">
-          <h4>Tools</h4>
-          <div class="core-skill-item">Altium Designer</div>
-          <div class="core-skill-item">KiCad</div>
-          <div class="core-skill-item">STM32CubeMX</div>
-          <div class="core-skill-item">ESP-IDF</div>
-          <div class="core-skill-item">LTSpice</div>
-        </div>
-        <div class="core-skill-group">
-          <h4>Firmware</h4>
-          <div class="core-skill-item">Embedded C/C++</div>
-          <div class="core-skill-item">FreeRTOS</div>
-          <div class="core-skill-item">HAL / LL Drivers</div>
-          <div class="core-skill-item">STM32 &amp; ESP32</div>
-          <div class="core-skill-item">ArduPilot / PX4</div>
-        </div>
-      </div>
-    </div>
+  <!-- ── PAGES ── -->
+  <div id="pages-container">
+    <div class="page active" id="page-home"></div>
+    <div class="page" id="page-about"></div>
+    <div class="page" id="page-services"></div>
+    <div class="page" id="page-projects"></div>
+    <div class="page" id="page-resume"></div>
+    <div class="page" id="page-certifications"></div>
+    <div class="page" id="page-blog"></div>
+    <div class="page" id="page-contact"></div>
   </div>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="section-wrap">
-      <div class="section-header reveal">
-        <div class="section-tag">02 // Services</div>
-        <h2 class="section-title">What I <span>Offer</span></h2>
-        <p style="margin-top:10px;color:var(--muted);font-size:.82rem;font-family:'Share Tech Mono',monospace;letter-spacing:.06em">Click any service for full technical details →</p>
-      </div>
-      <div class="services-grid reveal">
-        <div class="service-card" onclick="openServiceModal('pcb')">
-          <span class="service-num">01</span><span class="service-icon">⬡</span>
-          <div class="service-title">PCB Design & Layout</div>
-          <p class="service-desc">Multi-layer PCB design from schematic capture to manufacturing-ready Gerbers. Impedance control, DFM, and SI-focused layouts.</p>
-          <div class="service-tags"><span class="service-tag-item">KiCad</span><span class="service-tag-item">Altium</span><span class="service-tag-item">2–12 Layer</span><span class="service-tag-item">High-Speed</span></div>
-          <div class="service-click-hint">VIEW DETAILS →</div>
-        </div>
-        <div class="service-card" onclick="openServiceModal('embedded')">
-          <span class="service-num">02</span><span class="service-icon">⚙</span>
-          <div class="service-title">Embedded Systems Dev</div>
-          <p class="service-desc">Firmware for STM32, ESP32, and Arduino. RTOS, HAL drivers, peripheral configuration, and full hardware bring-up.</p>
-          <div class="service-tags"><span class="service-tag-item">STM32H7</span><span class="service-tag-item">ESP32</span><span class="service-tag-item">FreeRTOS</span><span class="service-tag-item">C/C++</span></div>
-          <div class="service-click-hint">VIEW DETAILS →</div>
-        </div>
-        <div class="service-card" onclick="openServiceModal('drone')">
-          <span class="service-num">03</span><span class="service-icon">🚁</span>
-          <div class="service-title">Drone Systems & Flight Controllers</div>
-          <p class="service-desc">Custom FC hardware and firmware. PX4/ArduPilot integration, triple IMU redundancy, CAN-FD, DShot, and GNSS.</p>
-          <div class="service-tags"><span class="service-tag-item">PX4</span><span class="service-tag-item">ArduPilot</span><span class="service-tag-item">DShot</span><span class="service-tag-item">CAN-FD</span></div>
-          <div class="service-click-hint">VIEW DETAILS →</div>
-        </div>
-        <div class="service-card" onclick="openServiceModal('iot')">
-          <span class="service-num">04</span><span class="service-icon">📡</span>
-          <div class="service-title">IoT Solutions & Prototyping</div>
-          <p class="service-desc">End-to-end IoT product development — sensors, wireless comms, cloud connectivity, and low-power design for field-deployed systems.</p>
-          <div class="service-tags"><span class="service-tag-item">MQTT</span><span class="service-tag-item">LoRa</span><span class="service-tag-item">GSM</span><span class="service-tag-item">Low Power</span></div>
-          <div class="service-click-hint">VIEW DETAILS →</div>
-        </div>
-        <div class="service-card" onclick="openServiceModal('mechanical')">
-          <span class="service-num">05</span><span class="service-icon">🔩</span>
-          <div class="service-title">3D Mechanical Design</div>
-          <p class="service-desc">Enclosures, brackets, and mechanical assemblies modeled for 3D printing or CNC. Full MCAD–ECAD co-design workflow.</p>
-          <div class="service-tags"><span class="service-tag-item">SolidWorks</span><span class="service-tag-item">Inventor</span><span class="service-tag-item">FDM</span><span class="service-tag-item">CNC</span></div>
-          <div class="service-click-hint">VIEW DETAILS →</div>
-        </div>
-        <div class="service-card" onclick="openServiceModal('power')">
-          <span class="service-num">06</span><span class="service-icon">⚡</span>
-          <div class="service-title">Power Electronics Design</div>
-          <p class="service-desc">Buck/boost converters, BMS, ESC design, USB PD 100W, and PDN design with full thermal analysis and LTSpice simulation.</p>
-          <div class="service-tags"><span class="service-tag-item">Buck/Boost</span><span class="service-tag-item">USB PD 100W</span><span class="service-tag-item">BMS</span><span class="service-tag-item">ESC</span></div>
-          <div class="service-click-hint">VIEW DETAILS →</div>
-        </div>
-      </div>
+  <!-- ── FOOTER ── -->
+  <footer id="site-footer">
+    <div class="footer-brand">KEN WAMBUI<span>.</span></div>
+    <div class="footer-links">
+      <a onclick="switchPage('home')">Home</a>
+      <a onclick="switchPage('projects')">Projects</a>
+      <a onclick="switchPage('contact')">Contact</a>
     </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="section-wrap">
-      <div class="section-header reveal">
-        <div class="section-tag">03 // Projects</div>
-        <h2 class="section-title">Selected <span>Work</span></h2>
-        <p style="margin-top:10px;color:var(--muted);font-size:.82rem;font-family:'Share Tech Mono',monospace;letter-spacing:.06em">Click any project for full details + photo gallery →</p>
-      </div>
-      <div class="projects-grid reveal">
-        <div class="project-card" onclick="openProjectModal('fc')">
-          <div class="project-image" style="background:linear-gradient(135deg,#0a1f3d,#020817)">
-            <svg class="project-image-pattern" viewBox="0 0 300 180"><line x1="0" y1="90" x2="300" y2="90" stroke="#00d4ff" stroke-width=".5"/><line x1="150" y1="0" x2="150" y2="180" stroke="#00d4ff" stroke-width=".5"/><circle cx="150" cy="90" r="40" stroke="#00d4ff" stroke-width=".5" fill="none"/><circle cx="150" cy="90" r="20" stroke="#00ff9f" stroke-width=".5" fill="none"/><rect x="110" y="70" width="80" height="40" stroke="#00d4ff" stroke-width=".5" fill="none"/></svg>
-            <span class="project-icon-big">🛸</span><div class="project-badge">FLAGSHIP</div>
-          </div>
-          <div class="project-body">
-            <div class="project-title">STM32H743 Custom Flight Controller</div>
-            <p class="project-desc">Cube Orange-level FC with triple IMU redundancy, dual CAN-FD, dual barometers, QSPI flash, and full ArduPilot integration.</p>
-            <div class="project-techs"><span class="tech-chip">STM32H743</span><span class="tech-chip">KiCad</span><span class="tech-chip">ArduPilot</span><span class="tech-chip">CAN-FD</span><span class="tech-chip">DShot</span></div>
-            <div class="project-more-hint">View Details &amp; Photos</div>
-          </div>
-        </div>
-        <div class="project-card" onclick="openProjectModal('hub')">
-          <div class="project-image" style="background:linear-gradient(135deg,#0f1f3d,#020817)">
-            <svg class="project-image-pattern" viewBox="0 0 300 180"><rect x="20" y="20" width="260" height="140" stroke="#00d4ff" stroke-width=".5" fill="none"/><rect x="40" y="40" width="60" height="40" stroke="#00ff9f" stroke-width=".5" fill="none"/><rect x="120" y="40" width="60" height="40" stroke="#00ff9f" stroke-width=".5" fill="none"/><rect x="200" y="40" width="60" height="40" stroke="#00ff9f" stroke-width=".5" fill="none"/></svg>
-            <span class="project-icon-big">🖧</span><div class="project-badge">PCB</div>
-          </div>
-          <div class="project-body">
-            <div class="project-title">USB7206 Hub with GbE & HDMI 2.0</div>
-            <p class="project-desc">Custom USB hub with Gigabit Ethernet, M.2 expansion, HDMI 2.0, USB-C PD sink, and audio codec on one board.</p>
-            <div class="project-techs"><span class="tech-chip">USB7206</span><span class="tech-chip">GbE</span><span class="tech-chip">HDMI 2.0</span><span class="tech-chip">USB-C PD</span><span class="tech-chip">M.2</span></div>
-            <div class="project-more-hint">View Details &amp; Photos</div>
-          </div>
-        </div>
-        <div class="project-card" onclick="openProjectModal('esc')">
-          <div class="project-image" style="background:linear-gradient(135deg,#1a0f2e,#020817)">
-            <svg class="project-image-pattern" viewBox="0 0 300 180"><circle cx="75" cy="90" r="30" stroke="#ff6b35" stroke-width=".5" fill="none"/><circle cx="150" cy="90" r="30" stroke="#ff6b35" stroke-width=".5" fill="none"/><circle cx="225" cy="90" r="30" stroke="#ff6b35" stroke-width=".5" fill="none"/></svg>
-            <span class="project-icon-big">⚡</span><div class="project-badge">ESC</div>
-          </div>
-          <div class="project-body">
-            <div class="project-title">TACOS 4-in-1 45A ESC</div>
-            <p class="project-desc">High-performance 4-in-1 ESC for multirotor drones. MOSFET selection, thermal analysis, and DShot/BLHeli support.</p>
-            <div class="project-techs"><span class="tech-chip">MOSFET</span><span class="tech-chip">DShot</span><span class="tech-chip">45A</span><span class="tech-chip">BLHeli</span></div>
-            <div class="project-more-hint">View Details &amp; Photos</div>
-          </div>
-        </div>
-        <div class="project-card" onclick="openProjectModal('farmty')">
-          <div class="project-image" style="background:linear-gradient(135deg,#0a2010,#020817)">
-            <svg class="project-image-pattern" viewBox="0 0 300 180"><ellipse cx="150" cy="90" rx="100" ry="60" stroke="#00ff9f" stroke-width=".5" fill="none"/><path d="M80 90 Q150 30 220 90 Q150 150 80 90" stroke="#00d4ff" stroke-width=".5" fill="none"/></svg>
-            <span class="project-icon-big">🌱</span><div class="project-badge">IoT</div>
-          </div>
-          <div class="project-body">
-            <div class="project-title">Farmty IoT Smart Farming PCB</div>
-            <p class="project-desc">ESP32 DIN-rail agricultural monitoring for East African farms. Multi-sensor, WiFi/GSM, irrigation control, and cloud streaming.</p>
-            <div class="project-techs"><span class="tech-chip">ESP32</span><span class="tech-chip">MQTT</span><span class="tech-chip">DIN-Rail</span><span class="tech-chip">Agriculture</span></div>
-            <div class="project-more-hint">View Details &amp; Photos</div>
-          </div>
-        </div>
-        <div class="project-card" onclick="openProjectModal('co2')">
-          <div class="project-image" style="background:linear-gradient(135deg,#0a1628,#020817)">
-            <svg class="project-image-pattern" viewBox="0 0 300 180"><rect x="60" y="50" width="180" height="80" stroke="#00d4ff" stroke-width=".5" fill="none" rx="4"/><rect x="80" y="70" width="50" height="40" stroke="#00ff9f" stroke-width=".5" fill="none"/><rect x="150" y="70" width="50" height="40" stroke="#00ff9f" stroke-width=".5" fill="none"/></svg>
-            <span class="project-icon-big">💨</span><div class="project-badge">SENSOR</div>
-          </div>
-          <div class="project-body">
-            <div class="project-title">CO₂ Environmental Sensor PCB</div>
-            <p class="project-desc">SCD40-based air quality monitor with BLE/WiFi, USB-C charging, and compact form factor for indoor real-time monitoring.</p>
-            <div class="project-techs"><span class="tech-chip">SCD40</span><span class="tech-chip">ESP32</span><span class="tech-chip">USB-C</span><span class="tech-chip">BLE</span></div>
-            <div class="project-more-hint">View Details &amp; Photos</div>
-          </div>
-        </div>
-        <div class="project-card" onclick="openProjectModal('relay')">
-          <div class="project-image" style="background:linear-gradient(135deg,#1a1005,#020817)">
-            <svg class="project-image-pattern" viewBox="0 0 300 180"><rect x="20" y="20" width="40" height="140" stroke="#ff6b35" stroke-width=".5" fill="none"/><rect x="80" y="50" width="200" height="30" stroke="#00d4ff" stroke-width=".5" fill="none"/><rect x="80" y="100" width="200" height="30" stroke="#00d4ff" stroke-width=".5" fill="none"/></svg>
-            <span class="project-icon-big">🔌</span><div class="project-badge">INDUSTRIAL</div>
-          </div>
-          <div class="project-body">
-            <div class="project-title">ESP32 Industrial Relay Controller</div>
-            <p class="project-desc">4-layer DIN-rail relay controller with optocoupled inputs, WiFi/MQTT control, and industrial-grade protection.</p>
-            <div class="project-techs"><span class="tech-chip">ESP32</span><span class="tech-chip">4-Layer</span><span class="tech-chip">Optocoupled</span><span class="tech-chip">DIN-Rail</span></div>
-            <div class="project-more-hint">View Details &amp; Photos</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESUME -->
-  <section id="resume">
-    <div class="section-wrap">
-      <div class="section-header reveal">
-        <div class="section-tag">04 // Resume</div>
-        <h2 class="section-title">Experience &amp; <span>Skills</span></h2>
-      </div>
-      <div class="resume-grid reveal">
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-period">2022 – Mar 2026</div>
-            <div class="timeline-role">Mechatronics Engineer / Hardware Designer</div>
-            <div class="timeline-company">AfrifabriLabs · ZeroBionics — Nairobi, Kenya</div>
-            <p class="timeline-desc">Led PCB design for embedded systems and drone platforms. Delivered production-ready schematics, multi-layer layouts, and firmware. Responsible for DFM review, BOM management, and manufacturer liaison.</p>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-period">2021 – 2022</div>
-            <div class="timeline-role">Electronics Hardware Engineer</div>
-            <div class="timeline-company">Ailwing Drones Limited — Nairobi, Kenya</div>
-            <p class="timeline-desc">Designed flight controller PCBs and ESC hardware for commercial drone applications. Developed ArduPilot integration and custom sensor fusion pipelines for autonomous flight systems.</p>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-period">Ongoing</div>
-            <div class="timeline-role">Freelance PCB Design Engineer</div>
-            <div class="timeline-company">Independent · Fiverr · International Clients</div>
-            <p class="timeline-desc">PCB design, embedded firmware, and IoT prototyping for clients globally. Specializing in drone systems, industrial IoT, high-speed interfaces, and custom electronics.</p>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-period">Certifications</div>
-            <div class="timeline-role">FEDEVEL Academy · ESTEEM PCB</div>
-            <div class="timeline-company">Advanced PCB Design &amp; Signal Integrity</div>
-            <p class="timeline-desc">Advanced coursework in high-speed PCB design, signal integrity, power distribution networks, and IPC-2221 standards compliance.</p>
-          </div>
-        </div>
-        <div class="skills-panel">
-          <h3>Technical Proficiency</h3>
-          <div class="skill-bar-wrap"><div class="skill-bar-label"><span class="skill-bar-name">PCB Design (KiCad / Altium)</span><span class="skill-bar-pct">95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="95"></div></div></div>
-          <div class="skill-bar-wrap"><div class="skill-bar-label"><span class="skill-bar-name">STM32 Embedded Dev</span><span class="skill-bar-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="90"></div></div></div>
-          <div class="skill-bar-wrap"><div class="skill-bar-label"><span class="skill-bar-name">ESP32 / FreeRTOS</span><span class="skill-bar-pct">92%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="92"></div></div></div>
-          <div class="skill-bar-wrap"><div class="skill-bar-label"><span class="skill-bar-name">Signal &amp; Power Integrity</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div></div>
-          <div class="skill-bar-wrap"><div class="skill-bar-label"><span class="skill-bar-name">ArduPilot / PX4</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div></div>
-          <div class="skill-bar-wrap"><div class="skill-bar-label"><span class="skill-bar-name">Power Electronics</span><span class="skill-bar-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="82"></div></div></div>
-          <div class="skill-bar-wrap"><div class="skill-bar-label"><span class="skill-bar-name">SolidWorks / Inventor</span><span class="skill-bar-pct">80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div></div>
-          <h3 style="margin-top:40px">Toolchain</h3>
-          <div class="skills-grid" style="margin-top:14px">
-            <div class="skill-tag">KiCad 8</div><div class="skill-tag">Altium Designer</div>
-            <div class="skill-tag">STM32CubeIDE/MX</div><div class="skill-tag">ESP-IDF / PlatformIO</div>
-            <div class="skill-tag">LTSpice</div><div class="skill-tag">SolidWorks 2024</div>
-            <div class="skill-tag">MATLAB / Simulink</div><div class="skill-tag">Git / GitHub</div>
-          </div>
-          <div style="margin-top:32px"><a href="#contact" class="btn-primary" style="width:100%;justify-content:center"><span>↓ Request Full CV</span></a></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BLOG -->
-  <section id="blog">
-    <div class="section-wrap">
-      <div class="section-header reveal">
-        <div class="section-tag">05 // Blog</div>
-        <h2 class="section-title">Technical <span>Writings</span></h2>
-      </div>
-      <div class="blog-grid reveal">
-        <div class="blog-card">
-          <div class="blog-date">2026 · Flight Controllers</div>
-          <div class="blog-title">Designing a Cube Orange-Level FC with STM32H743: Lessons Learned</div>
-          <p class="blog-excerpt">Triple IMU redundancy, CAN-FD bus design, and ArduPilot hwdef integration on a custom PCB — and the signal integrity pitfalls along the way.</p>
-          <div class="blog-read-more">Read Article</div>
-        </div>
-        <div class="blog-card">
-          <div class="blog-date">2025 · Power Design</div>
-          <div class="blog-title">Schottky Diodes in Buck Converters: Package Selection for Thermal Performance</div>
-          <p class="blog-excerpt">TPS54560B bootstrap diode selection deep dive — why the footprint matters as much as the part number, and how to avoid a thermal surprise at production.</p>
-          <div class="blog-read-more">Read Article</div>
-        </div>
-        <div class="blog-card">
-          <div class="blog-date">2025 · IoT</div>
-          <div class="blog-title">Building Agricultural IoT for East Africa: Constraints &amp; Opportunities</div>
-          <p class="blog-excerpt">Designing the Farmty smart farming PCB taught me that hardware for the Kenyan market needs different tradeoffs — power, connectivity, and durability above all else.</p>
-          <div class="blog-read-more">Read Article</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-wrap">
-      <div class="section-header reveal">
-        <div class="section-tag">06 // Contact</div>
-        <h2 class="section-title">Let's Build<br><span>Something</span></h2>
-      </div>
-      <div class="contact-grid reveal">
-        <div class="contact-info">
-          <h3>Available for Projects</h3>
-          <p>Whether you need a full-time electronics engineer or a specialist for your next hardware project, I'm open to both. Based in Nairobi — working globally.</p>
-          <div class="contact-links">
-            <a href="mailto:kenneth.wambui.n@gmail.com" class="contact-link">
-              <div class="contact-link-icon">✉</div>
-              <div class="contact-link-meta"><span class="contact-link-label">Email</span><span>kenneth.wambui.n@gmail.com</span></div>
-            </a>
-            <a href="https://www.linkedin.com/in/ken-wambui-b8051918a/" target="_blank" class="contact-link">
-              <div class="contact-link-icon">in</div>
-              <div class="contact-link-meta"><span class="contact-link-label">LinkedIn</span><span>Ken Wambui</span></div>
-            </a>
-            <a href="https://github.com/Ken-wambui" target="_blank" class="contact-link">
-              <div class="contact-link-icon">GH</div>
-              <div class="contact-link-meta"><span class="contact-link-label">GitHub</span><span>Ken-wambui</span></div>
-            </a>
-            <a href="https://www.fiverr.com/s/LdjrrKa" target="_blank" class="contact-link">
-              <div class="contact-link-icon" style="color:var(--green)">5★</div>
-              <div class="contact-link-meta"><span class="contact-link-label">Fiverr</span><span>Hire on Fiverr</span></div>
-            </a>
-            <div class="contact-link">
-              <div class="contact-link-icon">📍</div>
-              <div class="contact-link-meta"><span class="contact-link-label">Location</span><span>Nairobi, Kenya · Remote OK</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="contact-form">
-          <div class="form-group"><label class="form-label">Name</label><input type="text" class="form-input" placeholder="Your full name" /></div>
-          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="you@company.com" /></div>
-          <div class="form-group"><label class="form-label">Project Type</label><input type="text" class="form-input" placeholder="e.g. PCB Design, Drone FC, IoT..." /></div>
-          <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Describe your project, requirements, timeline..."></textarea></div>
-          <button class="form-submit" onclick="handleContact(this)"><span>⟶ Send Message</span></button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-brand">KEN WAMBUI<span style="color:var(--green)">.</span></div>
     <div class="footer-copy">© 2026 · PCB Design Engineer · Mechatronics Engineer · Nairobi, Kenya</div>
   </footer>
 
-  <!-- SERVICE MODAL -->
-  <div class="modal-overlay" id="serviceModal" onclick="closeBg(event,'serviceModal')">
+  <!-- ── MODALS ── -->
+  <div class="modal-overlay" id="service-modal" onclick="closeBg(event,'service-modal')">
     <div class="modal-panel">
-      <div class="modal-close">
-        <span class="modal-close-tag" id="svcTag">Service Details</span>
-        <button class="modal-close-btn" onclick="closeModal('serviceModal')">✕</button>
+      <div class="modal-hdr">
+        <span class="modal-tag" id="svc-tag"></span>
+        <button class="modal-close-btn" onclick="closeModal('service-modal')">✕</button>
       </div>
-      <div class="modal-body" id="svcBody"></div>
+      <div class="modal-body" id="svc-body"></div>
     </div>
   </div>
 
-  <!-- PROJECT MODAL -->
-  <div class="modal-overlay" id="projectModal" onclick="closeBg(event,'projectModal')">
+  <div class="modal-overlay" id="project-modal" onclick="closeBg(event,'project-modal')">
     <div class="modal-panel">
-      <div class="modal-close">
-        <span class="modal-close-tag" id="prjTag">Project Details</span>
-        <button class="modal-close-btn" onclick="closeModal('projectModal')">✕</button>
+      <div class="modal-hdr">
+        <span class="modal-tag" id="prj-tag"></span>
+        <button class="modal-close-btn" onclick="closeModal('project-modal')">✕</button>
       </div>
-      <div class="modal-body" id="prjBody"></div>
+      <div class="modal-body" id="prj-body"></div>
     </div>
   </div>
 
-  <script>
-  /* PARTICLES */
-  (()=>{const c=document.getElementById('particles');for(let i=0;i<26;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`left:${Math.random()*100}vw;animation-duration:${8+Math.random()*20}s;animation-delay:${Math.random()*15}s;background:${Math.random()>.5?'var(--cyan)':'var(--green)'}`;c.appendChild(p);}})();
+  <div class="modal-overlay" id="blog-modal" onclick="closeBg(event,'blog-modal')">
+    <div class="modal-panel modal-panel--wide">
+      <div class="modal-hdr">
+        <span class="modal-tag" id="blog-tag"></span>
+        <button class="modal-close-btn" onclick="closeModal('blog-modal')">✕</button>
+      </div>
+      <div class="modal-body" id="blog-body"></div>
+    </div>
+  </div>
 
-  /* REVEAL */
-  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');e.target.querySelectorAll('.skill-bar-fill').forEach(b=>{setTimeout(()=>{b.style.width=b.dataset.pct+'%'},300)});}});},{threshold:.1});
-  document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
-
-  /* NAV */
-  window.addEventListener('scroll',()=>{let cur='';document.querySelectorAll('section[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id});document.querySelectorAll('.nav-links a').forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'var(--cyan)':''});});
-
-  /* CONTACT */
-  function handleContact(btn){btn.querySelector('span').textContent='✓ Message Sent!';btn.style.cssText='border-color:var(--green);color:var(--green)';setTimeout(()=>{btn.querySelector('span').textContent='⟶ Send Message';btn.style.cssText=''},3000);}
-
-  /* MODAL */
-  function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
-  function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
-  function closeBg(e,id){if(e.target===document.getElementById(id))closeModal(id);}
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('serviceModal');closeModal('projectModal');}});
-
-  /* GALLERY */
-  function gallery(n){
-    let h='<div class="modal-gallery">';
-    for(let i=0;i<n;i++)h+=`<div class="gallery-slot" id="gs${i}"><div class="gallery-slot-icon">📷</div><div>${i===0?'Main photo / PCB render':'Photo '+(i+1)}</div><div style="font-size:.58rem;opacity:.5;margin-top:2px">Click to upload</div><input type="file" accept="image/*" onchange="prevImg(this,'gs${i}')" /></div>`;
-    return h+'</div>';
-  }
-  function prevImg(inp,id){const slot=document.getElementById(id),file=inp.files[0];if(!file)return;const r=new FileReader();r.onload=e=>{let img=slot.querySelector('img');if(!img){img=document.createElement('img');slot.appendChild(img);}img.src=e.target.result;slot.querySelectorAll(':not(img):not(input)').forEach(el=>el.style.display='none');};r.readAsDataURL(file);}
-
-  function specs(arr){return`<div class="modal-specs">${arr.map(s=>`<div class="modal-spec"><div class="modal-spec-label">${s.l}</div><div class="modal-spec-value">${s.v}</div></div>`).join('')}</div>`;}
-  function checks(arr){return`<div class="modal-checklist">${arr.map(c=>`<div class="modal-check">${c}</div>`).join('')}</div>`;}
-  function delivs(arr){return arr.map(d=>`<div class="modal-deliverable"><div class="modal-deliverable-icon">${d.i}</div><div class="modal-deliverable-text"><strong>${d.t}</strong>${d.d}</div></div>`).join('');}
-  function tags(arr,green){return`<div class="modal-tags-row">${arr.map(t=>`<span class="modal-tag${green?' modal-tag-green':''}">${t}</span>`).join('')}</div>`;}
-  function cta(id){return`<div style="margin-top:32px"><a href="#contact" class="btn-primary" onclick="closeModal('${id}')" style="width:100%;justify-content:center"><span>⟶ Get a Quote</span></a></div>`;}
-
-  /* ═══ SERVICE DATA ═══ */
-  const SVC = {
-    pcb:{tag:'01 // PCB Design & Layout',title:'PCB Design & Layout',sub:'Multi-layer · High-Speed · Impedance-Controlled · DFM-Ready',
-      desc:'I design production-grade PCBs from initial concept through to manufacturing-ready Gerber output. Every board is designed with fabrication, assembly, and performance in mind — no corner-cutting on stack-up, impedance, or ground return paths.',
-      specs:[{l:'Layer Count',v:'2 to 12 layers (up to 16 on request)'},{l:'Min Track/Clearance',v:'0.1mm / 0.1mm standard; 0.075mm advanced'},{l:'Impedance Control',v:'±10% tolerance — 50Ω / 90Ω / 100Ω diff'},{l:'Min Via',v:'0.2mm drill / 0.4mm pad'},{l:'Standards',v:'IPC-2221, IPC-7351, IPC-2152'},{l:'Tools',v:'KiCad 8, Altium Designer'},{l:'Surface Finish',v:'HASL / ENIG / OSP — per application'},{l:'Fab Integration',v:'JLCPCB, PCBWay, OSH Park compatible'}],
-      checks:['Impedance-controlled differential pair routing (HDMI, USB 3.2, Ethernet, CAN-FD)','Return path analysis — solid reference planes, no split planes under fast signals','EMI mitigation: guard traces, shielding cutouts, ferrite bead placement strategy','Decoupling capacitor placement per datasheet recommendations and PI analysis','Thermal relief design for power components and heat-sensitive parts','DFM review: courtyard checks, pad-to-pad clearances, panelization design','DFA review: component orientation, paste coverage, testpoint accessibility','Design Rule Check (DRC) against fab capabilities before submission','BOM with verified LCSC / Mouser / DigiKey alternatives','Complete manufacturing package: Gerbers, Drill, Pick & Place, BOM'],
-      delivs:[{i:'📦',t:'Full Manufacturing Package',d:'Gerber files, drill files, pick & place, and BOM ready to send to fab.'},{i:'📐',t:'Schematic (PDF + native)',d:'Annotated schematic with net names, reference designators, and value callouts.'},{i:'📋',t:'DFM Report',d:'Written DFM/DFA notes and layer stack-up documentation.'},{i:'🔁',t:'Revision Rounds',d:'Up to 2 rounds included. Layout source files shared on request.'}]},
-    embedded:{tag:'02 // Embedded Systems',title:'Embedded Systems Development',sub:'STM32 · ESP32 · FreeRTOS · Hardware Bring-Up',
-      desc:'I develop embedded firmware from bare-metal initialization through full RTOS-based applications. My strong suit is hardware bring-up — I can read a schematic, understand the peripheral layout, and get a new board running fast.',
-      specs:[{l:'Primary MCUs',v:'STM32 (H7, F4, F7, G4), ESP32, ESP32-S3'},{l:'RTOS',v:'FreeRTOS (tasks, queues, semaphores, timers)'},{l:'HAL Level',v:'STM32 HAL + LL drivers; ESP-IDF native'},{l:'Interfaces',v:'SPI, I2C, UART/USART, CAN-FD, USB, SDMMC, QSPI'},{l:'Toolchain',v:'STM32CubeIDE, ESP-IDF, PlatformIO, VS Code'},{l:'Protocols',v:'DShot, SBUS, MAVLink, MQTT, Modbus'},{l:'Version Control',v:'Git / GitHub workflow'},{l:'Testing',v:'Hardware-in-the-loop, logic analyser validation'}],
-      checks:['Clock tree configuration and power mode setup','Peripheral driver development (SPI sensors, CAN nodes, serial buses)','DShot and PWM signal generation with hardware timer configuration','RTOS task design: priority assignment, stack sizing, deadlock avoidance','Bootloader integration (PX4 bootloader, custom IAP)','ArduPilot hwdef.dat and board configuration for custom flight controllers','OTA firmware update support over WiFi/BLE','Hardware bring-up documentation and debug logs'],
-      delivs:[{i:'💾',t:'Source Code (Git Repo)',d:'Clean, commented C/C++ with build instructions and dependency list.'},{i:'📋',t:'Hardware Bring-Up Guide',d:'Step-by-step board bring-up checklist and peripheral validation procedure.'},{i:'🐛',t:'Debug Support',d:'Logic analyser traces and oscilloscope captures validating key signals.'},{i:'📝',t:'hwdef / config Files',d:'ArduPilot hwdef.dat or PX4 board config for flight controller targets.'}]},
-    drone:{tag:'03 // Drone Systems',title:'Drone Systems & Flight Controllers',sub:'Custom FC · ArduPilot · PX4 · UAV Hardware',
-      desc:'I design custom flight controller hardware to commercial aerospace-grade performance levels. My flagship project matches Cube Orange specifications with triple IMU redundancy, dual CAN-FD, and dual barometers on a 6-layer PCB.',
-      specs:[{l:'Main MCU',v:'STM32H743 / STM32F7 (application specific)'},{l:'IMU Redundancy',v:'Triple IMU (ICM-42688-P, BMI270, ICM-20602)'},{l:'Barometers',v:'Dual (MS5611 or BMP388)'},{l:'CAN Bus',v:'Dual CAN-FD (MCP2562FD transceivers)'},{l:'ESC Protocol',v:'DShot150/300/600, bidirectional DShot'},{l:'Flash',v:'QSPI NOR Flash (W25Q128 or similar)'},{l:'Autopilot SW',v:'ArduPilot, PX4 (hwdef.dat + board config)'},{l:'Datalogger',v:'SDMMC microSD, 4-bit mode'}],
-      checks:['Triple IMU with independent SPI buses and hardware interrupt routing','Dual CAN-FD for redundant telemetry and ESC communication','SBUS hardware inversion via STM32H7 UART CR2 register (no external inverter IC)','Isolated power rails for IMU vs. digital logic noise sensitivity','FFC/FPC connector to daughterboard for vibration-isolated IMU mounting','ArduPilot hwdef.dat configuration including timer map and serial assignment','PX4 bootloader integration and CRC verification','JST-GH connector standard for peripherals (GPS, telemetry, RC)'],
-      delivs:[{i:'🛸',t:'Flight Controller PCB',d:'Gerbers, BOM, and assembly files. 6-layer impedance-controlled layout.'},{i:'💾',t:'ArduPilot / PX4 Config',d:'Complete hwdef.dat or board config for immediate compile and flash.'},{i:'📋',t:'Bring-Up Checklist',d:'Power sequencing, IMU validation, and motor output verification procedure.'},{i:'🔧',t:'Support',d:'Remote debug support during bench testing and first flight.'}]},
-    iot:{tag:'04 // IoT Solutions',title:'IoT Solutions & Prototyping',sub:'ESP32 · WiFi · GSM · LoRa · Low Power',
-      desc:'I design IoT products end-to-end — from sensor selection and power budget, through PCB layout, firmware, and cloud backend connectivity. Focused on East African deployment constraints: intermittent power, unreliable connectivity, and harsh environments.',
-      specs:[{l:'Main MCUs',v:'ESP32, ESP32-S3, ESP32-C3, STM32L4'},{l:'Connectivity',v:'WiFi, BLE, GSM/LTE-M, LoRa, Ethernet'},{l:'Protocols',v:'MQTT, HTTP/HTTPS, Modbus RTU, CoAP'},{l:'Power',v:'Solar + LiPo, deep sleep < 10 µA achievable'},{l:'Sensors',v:'Temperature, humidity, soil, gas, flow, weight'},{l:'Enclosure',v:'DIN-rail, IP65 field boxes, custom 3D-printed'},{l:'Cloud',v:'AWS IoT, Azure IoT Hub, Thingsboard, MQTT'},{l:'Display',v:'OLED, TFT (ILI9341), e-ink on request'}],
-      checks:['Power budget analysis before component selection','Antenna placement and RF keepout zone design','ESD protection on all external-facing interfaces','Watchdog timer and brownout detection for field reliability','OTA firmware update over WiFi/LTE-M','TLS certificate provisioning for cloud authentication','Low-power mode profiling with current measurement','Field enclosure IP rating and thermal management review'],
-      delivs:[{i:'📦',t:'Hardware Package',d:'Gerbers, BOM, and firmware source — ready to manufacture and deploy.'},{i:'📡',t:'Connectivity Config',d:'Cloud endpoint setup, MQTT topic structure, and provisioning guide.'},{i:'🔋',t:'Power Analysis',d:'Battery life estimation spreadsheet and sleep mode measurement traces.'},{i:'📲',t:'Dashboard',d:'Basic monitoring dashboard (Thingsboard or simple web UI) on request.'}]},
-    mechanical:{tag:'05 // 3D Mechanical',title:'3D Mechanical Design',sub:'SolidWorks · Inventor · ECAD–MCAD Co-Design',
-      desc:'I design enclosures, brackets, and mechanical assemblies that work with the electronics, not just around them. ECAD–MCAD integration means the PCB and enclosure are co-designed to avoid fitment surprises at prototype stage.',
-      specs:[{l:'Tools',v:'SolidWorks 2024, Autodesk Inventor'},{l:'Manufacturing',v:'FDM 3D printing, SLA, CNC milling, sheet metal'},{l:'ECAD–MCAD',v:'KiCad STEP export → SolidWorks assembly'},{l:'Standards',v:'DIN rail (EN 60715), IP65/IP67 sealing'},{l:'Tolerances',v:'±0.2mm FDM; ±0.05mm CNC'},{l:'Fasteners',v:'M2–M6 heat-set inserts for FDM parts'},{l:'Output',v:'STEP, STL, DXF, full drawing package'},{l:'Thermal',v:'Heatsink design and thermal interface specification'}],
-      checks:['PCB STEP import into assembly for exact fitment verification','Connector and port clearance checks against housing walls','DIN-rail mounting clip design to EN 60715 standard','IP65 sealing groove design with O-ring cross-section specification','Ventilation slot sizing for passive thermal management','M2–M6 heat-set insert placement for robust screw retention','Wall thickness ≥ 2mm for FDM structural integrity','Full assembly drawing with BOM for mechanical parts'],
-      delivs:[{i:'📐',t:'3D Model Package',d:'STEP + STL files ready for 3D printing or CNC quoting.'},{i:'📋',t:'Engineering Drawing',d:'2D drawing with tolerances, material callouts, and finish specification.'},{i:'🔩',t:'Hardware BOM',d:'List of screws, inserts, O-rings, and off-the-shelf mechanical parts.'},{i:'🖨',t:'Print-Ready Files',d:'Sliced files (PrusaSlicer / Bambu Studio) with recommended settings on request.'}]},
-    power:{tag:'06 // Power Electronics',title:'Power Electronics Design',sub:'Buck/Boost · USB PD · BMS · ESC · LDO',
-      desc:'I design power conversion circuits and power distribution networks that are efficient, thermally well-managed, and production-ready. From a simple LDO on a sensor board to a 100W USB PD sink or a 45A multi-phase ESC.',
-      specs:[{l:'Topologies',v:'Synchronous Buck, Boost, SEPIC, Flyback'},{l:'Voltage Range',v:'3.3V–60V input, 1V–48V output'},{l:'Current Capacity',v:'Up to 45A per phase (ESC), 10A (DC-DC)'},{l:'USB PD',v:'Up to 100W (TPS65987D, BQ25731)'},{l:'Battery Chem',v:'Li-Po, Li-Ion, LFP — BMS cell balancing'},{l:'Protection',v:'TVS, Schottky, reverse polarity, OCP, OVP, UVP'},{l:'Simulation',v:'LTSpice transient and AC analysis pre-layout'},{l:'Thermal',v:'Junction temperature and copper pour sizing analysis'}],
-      checks:['LTSpice simulation of switcher before PCB layout','Compensation network design for stability across load range','Switching node (VSW) pour minimized for EMI','Output capacitor ESR and ESL selection for ripple target','Thermal resistance analysis: junction-to-ambient vs. power dissipation','TVS / Schottky protection on all external power inputs','USB PD negotiation IC integration (TPS65987D, FUSB302)','BMS cell balancing, overcurrent, overtemperature fault handling','Power rail sequencing for multi-rail systems (PG signals)','IPC-2152 copper width vs. current carrying capacity compliance'],
-      delivs:[{i:'📊',t:'LTSpice Simulation',d:'Pre-layout simulation with transient and AC Bode plot results.'},{i:'📦',t:'PCB Manufacturing Files',d:'Power stage Gerbers, BOM with rated alternatives, and thermal notes.'},{i:'🌡',t:'Thermal Analysis',d:'Copper pour calculation, estimated junction temperature, and heatsink recommendation.'},{i:'📋',t:'Test Procedure',d:'Bench test sequence: soft-start, load step, OCP trip verification.'}]}
-  };
-
-  /* ═══ PROJECT DATA ═══ */
-  const PRJ = {
-    fc:{tag:'Project 01 // Flight Controller',title:'STM32H743 Custom Flight Controller',sub:'cube_orange_fc Rev 1.0 · KiCad · Ailwing Drones Limited',photos:4,
-      desc:'My flagship hardware project — a custom flight controller designed to match <span>Cube Orange performance</span> with a single STM32H743VIT6 MCU. Designed in KiCad on a 6-layer impedance-controlled stack-up. Targets ArduPilot and PX4 autopilot software with full hwdef.dat configuration.',
-      specs:[{l:'MCU',v:'STM32H743VIT6 (480 MHz, 2 MB Flash)'},{l:'IMUs',v:'ICM-42688-P + BMI270 + ICM-20602'},{l:'Barometers',v:'Dual MS5611 (independent I2C buses)'},{l:'CAN Bus',v:'Dual CAN-FD (MCP2562FD)'},{l:'Flash',v:'16 MB QSPI NOR (W25Q128)'},{l:'Datalogger',v:'SDMMC 4-bit microSD'},{l:'ESC Protocol',v:'Bidirectional DShot150/300/600'},{l:'Layer Count',v:'6-layer, ENIG finish'},{l:'IMU Isolation',v:'Daughter board via 30-pin FFC'},{l:'Autopilot SW',v:'ArduPilot + PX4 (hwdef.dat complete)'}],
-      challenges:['Routing 3 independent SPI buses for IMUs without crosstalk between high-speed sensor lines','SBUS hardware inversion via STM32H7 UART CR2 register — eliminated external inverter IC','DShot timer selection on APB2 for sub-microsecond edge timing accuracy','Power domain isolation between noisy digital logic and IMU analog supply rails','FFC connector routing for vibration-decoupled IMU daughter board with high-speed signal integrity'],
-      techs:['STM32H743VIT6','KiCad 8','ArduPilot','PX4','ICM-42688-P','BMI270','ICM-20602','MCP2562FD','DShot','CAN-FD','QSPI','SDMMC','MS5611']},
-    hub:{tag:'Project 02 // USB Hub',title:'USB7206 Hub with GbE & HDMI 2.0',sub:'Multi-Interface Hub PCB · KiCad',photos:4,
-      desc:'A feature-dense hub PCB built around the <span>USB7206 SuperSpeed USB hub controller</span>. Combines Gigabit Ethernet, M.2 expansion, HDMI 2.0 output, USB-C PD sink charging at up to 100W, and an audio codec — all on one compact board.',
-      specs:[{l:'USB Hub IC',v:'Microchip USB7206 (USB 3.2 Gen1)'},{l:'GbE',v:'Microchip LAN7850 (USB-to-GbE bridge)'},{l:'HDMI 2.0',v:'Megachips MCDP2900 retimer'},{l:'M.2 Slot',v:'PI7C9X442SL PCIe switch (M-key)'},{l:'USB-C PD Sink',v:'TPS65987D + BQ25731 (100W)'},{l:'Audio',v:'Integrated codec with I2S interface'},{l:'Interfaces',v:'USB-A×4, USB-C×1, RJ45, HDMI, M.2, 3.5mm'},{l:'Layer Count',v:'6-layer, controlled impedance'}],
-      challenges:['HDMI 2.0 TMDS differential pair routing at 6 Gbps per lane — 100Ω differential, matched length pairs','USB 3.2 SuperSpeed pairs with ±5 mil length matching and 90Ω differential impedance','PCIe M.2 lane routing with via stub minimization and reference plane continuity','USB PD CC pin routing and TPS65987D I2C configuration','Multi-rail power sequencing: 12V → 5V → 3.3V → 1.8V → 1.0V with PG signal chain'],
-      techs:['USB7206','LAN7850','MCDP2900','PI7C9X442SL','TPS65987D','BQ25731','HDMI 2.0','USB 3.2','PCIe','GbE','USB-C PD']},
-    esc:{tag:'Project 03 // ESC',title:'TACOS 4-in-1 45A ESC',sub:'4-in-1 Electronic Speed Controller · Multirotor Drones',photos:4,
-      desc:'A high-current 4-in-1 ESC designed for multirotor drones. Each of the four motor outputs is rated at <span>45A continuous</span> with 8S LiPo input. Designed with careful MOSFET selection for low Rds(on), matched switching node geometry, and DShot/BLHeli32 compatibility.',
-      specs:[{l:'Channels',v:'4 independent motor drives'},{l:'Continuous Current',v:'45A per channel'},{l:'Peak Current',v:'65A (10-second burst)'},{l:'Input Voltage',v:'3S–8S LiPo (9.9V–33.6V)'},{l:'MOSFET',v:'Dual N-channel per half-bridge, low Rds(on)'},{l:'ESC Protocol',v:'DShot150/300/600, BLHeli32'},{l:'Current Sensing',v:'Inline shunt per phase'},{l:'Layer Count',v:'4-layer, 2 oz copper pour'}],
-      challenges:['Copper pour sizing for 45A per channel using IPC-2152 current-carrying capacity tables','Switching node layout minimized to reduce ringing and EMI at high dI/dt transitions','Bootstrap capacitor and Schottky diode selection for reliable high-side gate drive','Thermal management: MOSFET junction temperature analysis under sustained 45A load','DShot signal integrity routing from MCU GPIO through gate driver to MOSFET'],
-      techs:['MOSFET','DShot600','BLHeli32','STM32F051','4-Layer PCB','Gate Driver','Current Sensing','45A','8S LiPo']},
-    farmty:{tag:'Project 04 // IoT',title:'Farmty IoT Smart Farming PCB',sub:'ESP32 · DIN-Rail · Agricultural Monitoring · East Africa',photos:4,
-      desc:'Designed for East African farm deployments where <span>power reliability, connectivity, and durability</span> are the primary constraints. Built around ESP32 in a DIN-rail enclosure with multi-sensor input and MQTT cloud data streaming.',
-      specs:[{l:'MCU',v:'ESP32 (WiFi + BLE)'},{l:'Form Factor',v:'DIN-Rail (EN 60715), IP40 enclosure'},{l:'Sensors',v:'Soil moisture, DHT22, flow meter, pH'},{l:'Outputs',v:'4× relay outputs for irrigation control'},{l:'Power',v:'12V DIN rail supply + LiPo backup'},{l:'Connectivity',v:'WiFi primary, SIM800L GSM fallback'},{l:'Protocol',v:'MQTT over WiFi / HTTP over GSM'},{l:'Display',v:'0.96" OLED local readout'}],
-      challenges:['Power budget with GSM modem (800mA peak) on LiPo backup — sized for 4-hour blackout cover','Relay isolation from ESP32 logic — optocoupled driver stage prevents solenoid switching noise','ADC accuracy for resistive soil moisture sensor — filtering and reference voltage stabilization','DIN-rail thermal design: 4 relays + ESP32 in enclosed box — venting slots and thermal analysis','WiFi antenna placement outside DIN-rail metal enclosure — external SMA connector routing'],
-      techs:['ESP32','MQTT','DIN-Rail','FreeRTOS','SIM800L','OLED','Relay','12V','LiPo BMS','Soil Sensor']},
-    co2:{tag:'Project 05 // Environmental Sensor',title:'CO₂ Environmental Sensor PCB',sub:'SCD40 · ESP32 · USB-C · BLE · Indoor Air Quality',photos:3,
-      desc:'A compact indoor air quality monitor built around the <span>Sensirion SCD40</span> CO₂ sensor. Measures CO₂ (400–2000 ppm), temperature, and humidity with USB-C charging, BLE data streaming, and WiFi cloud upload.',
-      specs:[{l:'CO₂ Sensor',v:'Sensirion SCD40 (photoacoustic, I2C)'},{l:'MCU',v:'ESP32-PICO-D4'},{l:'Power',v:'USB-C charging (TP4056), 400 mAh LiPo'},{l:'Connectivity',v:'WiFi 2.4GHz + BLE 5.0'},{l:'Display',v:'128×32 OLED (SSD1306, I2C)'},{l:'Battery Life',v:'~24 hours (2-min sample interval)'},{l:'PCB Size',v:'50 × 35 mm, 2-layer'},{l:'Charging',v:'USB-C with TP4056 + DW01A protection'}],
-      challenges:['SCD40 I2C address conflict with OLED — resolved via separate I2C bus on ESP32-PICO-D4','SCD40 supply noise sensitivity — local LDO with 10µF bulk + 100nF decoupling at VDD','USB-C connector mechanical stress — 4× via stitching for strain relief','BLE/WiFi antenna placement away from SCD40 to avoid EMI-induced CO₂ measurement drift','Battery protection and reverse polarity protection on LiPo connector'],
-      techs:['SCD40','ESP32-PICO-D4','USB-C','TP4056','BLE 5.0','WiFi','OLED','LiPo','I2C']},
-    relay:{tag:'Project 06 // Industrial Control',title:'ESP32 Industrial Relay Controller',sub:'4-Layer · DIN-Rail · Optocoupled Inputs · Building Automation',photos:3,
-      desc:'A production-grade 4-layer DIN-rail relay controller for building automation and industrial IoT. <span>Optocoupled inputs</span> protect the ESP32 from transients on field wiring. WiFi/MQTT control allows integration with Home Assistant, Node-RED, or custom dashboards.',
-      specs:[{l:'MCU',v:'ESP32 (WiFi + BLE)'},{l:'Relay Outputs',v:'4× SPDT mechanical relay, 10A/250VAC'},{l:'Digital Inputs',v:'4× optocoupled (PC817), 5–24V compatible'},{l:'Layer Count',v:'4-layer PCB'},{l:'Form Factor',v:'DIN-Rail, 6HP (standard rail pitch)'},{l:'Power Input',v:'12–24V DC via DIN rail supply'},{l:'Connectivity',v:'WiFi 2.4GHz (MQTT / HTTP API)'},{l:'Isolation',v:'3.75 kV optocoupler creepage distance'}],
-      challenges:['4-layer stack-up: power planes on inner layers for EMI shielding from relay coil switching noise','Relay coil flyback suppression — TVS + freewheeling diode on each coil','Optocoupler input current resistor sizing for 5V, 12V, and 24V input compatibility','DIN rail 6HP constraint — component density challenge with 4 relays + ESP32 module','Terminal block selection — 5.08mm pitch push-in cage clamp for tool-free field wiring'],
-      techs:['ESP32','4-Layer','PC817 Optocoupler','MQTT','DIN-Rail','SPDT Relay','TVS','FreeRTOS','Home Assistant']}
-  };
-
-  function buildSvc(k){
-    const d=SVC[k];
-    return`<div class="modal-title">${d.title}</div><div class="modal-subtitle">${d.sub}</div><div class="modal-desc">${d.desc}</div>
-    <div class="modal-section-label">Specifications & Capabilities</div>${specs(d.specs)}
-    <div class="modal-section-label">Design Checklist</div>${checks(d.checks)}
-    <div class="modal-section-label">Deliverables</div>${delivs(d.delivs)}${cta('serviceModal')}`;
-  }
-  function buildPrj(k){
-    const d=PRJ[k];
-    return`${gallery(d.photos)}<div class="modal-title">${d.title}</div><div class="modal-subtitle">${d.sub}</div><div class="modal-desc">${d.desc}</div>
-    <div class="modal-section-label">Technical Specifications</div>${specs(d.specs)}
-    <div class="modal-section-label">Design Challenges & Solutions</div>${checks(d.challenges)}
-    <div class="modal-section-label">Technologies Used</div>${tags(d.techs,true)}${cta('projectModal')}`;
-  }
-
-  function openServiceModal(k){
-    const d=SVC[k]; if(!d) return;
-    document.getElementById('svcTag').textContent=d.tag;
-    document.getElementById('svcBody').innerHTML=buildSvc(k);
-    openModal('serviceModal');
-  }
-  function openProjectModal(k){
-    const d=PRJ[k]; if(!d) return;
-    document.getElementById('prjTag').textContent=d.tag;
-    document.getElementById('prjBody').innerHTML=buildPrj(k);
-    openModal('projectModal');
-  }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
