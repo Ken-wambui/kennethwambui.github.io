@@ -14,7 +14,7 @@
 
 /* ═══════════════════════ CONFIG ═══════════════════════ */
 const CONFIG = {
-  name: 'Ken Wambui',
+  name: 'KEN WAMBUI',
   role: 'PCB Design Engineer & Mechatronics Engineer',
   subtitle: 'High-Speed PCB Design · UAV Systems · Embedded Firmware',
   tagline: `Specialized PCB Design Engineer based in <span>Nairobi, Kenya</span> — with a proven record designing
@@ -59,7 +59,7 @@ const experienceData = [
   {
     period: '2025 – 2026',
     role: 'Electronics Hardware Engineer',
-    company: 'Ailwing Drones Limited — Nairobi, Kenya',
+    company: 'Ailwing Drones Limited — Tamil Nadu, India',
     desc: 'Designed flight controller PCBs and ESC hardware for commercial drone applications. Developed ArduPilot integration, custom sensor fusion pipelines, and autonomous flight systems.',
   },
   {
@@ -93,7 +93,7 @@ const toolsData = ['KiCad 10','Altium Designer','STM32CubeIDE/MX','ESP-IDF / Pla
 const certsData = [
   {
     color: 'cyan', icon: '🎓', type: 'Honours Degree',
-    title: 'BEng (Hons) Mechatronics Engineering',
+    title: 'BSc. Mechatronics Engineering',
     issuer: 'Dedan Kimathi University of Technology',
     year: '2025',
     desc: 'Honours Bachelor\'s degree in Mechatronics Engineering. Coursework spanning embedded systems, control systems, mechanical design, electronics, and robotics. Final year project: MATLAB analysis of drilling experiment data (temperature, vibration, force). Located in Nyeri, Kenya.',
@@ -806,12 +806,12 @@ function renderAbout() {
         <div>
           <div class="sec-header">
             <div class="sec-tag">01 // About</div>
-            <h2 class="sec-title">PCB Design Engineer<br><span>from Nairobi</span></h2>
+            <h2 class="sec-title">PCB Design Engineer<br><span>from Kenya</span></h2>
           </div>
           <div class="degree-badge">
             <span class="degree-badge-icon">🎓</span>
             <div class="degree-badge-text">
-              <strong>BEng (Hons) Mechatronics Engineering</strong>
+              <strong>BSc. Mechatronics Engineering</strong>
               Dedan Kimathi University of Technology — Nyeri, Kenya
             </div>
           </div>
@@ -1056,7 +1056,7 @@ function renderContact() {
       <div class="contact-grid">
         <div class="contact-info">
           <h3>Available for Projects</h3>
-          <p>Whether you need a full-time electronics engineer or a specialist for your next hardware project, I'm open to both. Based in Nairobi — working globally.</p>
+          <p>Whether you need a full-time electronics engineer or a specialist for your next hardware project, I'm open to both. Based in Kenya — working globally.</p>
           <div class="clink-list">
             <a href="mailto:${CONFIG.email}" class="clink">
               <div class="clink-icon">✉</div>
