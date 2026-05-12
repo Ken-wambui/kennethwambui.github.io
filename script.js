@@ -14,10 +14,10 @@
 
 /* ═══════════════════════ CONFIG ═══════════════════════ */
 const CONFIG = {
-  name: 'KEN WAMBUI',
+  name: 'Ken Wambui',
   role: 'PCB Design Engineer & Mechatronics Engineer',
   subtitle: 'High-Speed PCB Design · UAV Systems · Embedded Firmware',
-  tagline: `Specialized PCB Design Engineer based in <span> Limuru, Kenya</span> — with a proven record designing
+  tagline: `Specialized PCB Design Engineer based in <span>Nairobi, Kenya</span> — with a proven record designing
     high-speed, impedance-controlled, multi-layer PCBs for UAV, IoT, industrial, and consumer applications.
     From schematic capture to DFM-ready Gerber output.`,
   profilePhoto: 'assets/images/profile.jpg',
@@ -27,7 +27,7 @@ const CONFIG = {
   linkedin: { label: 'Ken Wambui', url: 'https://www.linkedin.com/in/ken-wambui-b8051918a/' },
   github:   { label: 'Ken-wambui', url: 'https://github.com/Ken-wambui' },
   fiverr:   { label: 'Hire on Fiverr', url: 'https://www.fiverr.com/s/LdjrrKa' },
-  location: 'Kiambu, Kenya · Remote OK',
+  location: 'Nairobi, Kenya · Remote OK',
 
   /* ── FORMSPREE SETUP ──────────────────────────────────────
      1. Go to https://formspree.io and sign up (free)
@@ -36,11 +36,11 @@ const CONFIG = {
      4. Paste it below replacing YOUR_FORM_ID
      That's it — submissions will arrive in your email inbox.
   ──────────────────────────────────────────────────────── */
-  formspreeId: 'xjgljrlv',
+  formspreeId: 'YOUR_FORM_ID',
 
   stats: [
-    { num: '1+', label: 'Years Experience' },
-    { num: '20+', label: 'PCBs Designed' },
+    { num: '2+', label: 'Years Experience' },
+    { num: '15+', label: 'PCBs Designed' },
     { num: '4',   label: 'Companies Served' },
     { num: '∞',   label: 'Coffee Consumed' },
   ],
@@ -59,7 +59,7 @@ const experienceData = [
   {
     period: '2025 – 2026',
     role: 'Electronics Hardware Engineer',
-    company: 'Ailwing Drones Limited — Tamil Nandu, India',
+    company: 'Ailwing Drones Limited — Nairobi, Kenya',
     desc: 'Designed flight controller PCBs and ESC hardware for commercial drone applications. Developed ArduPilot integration, custom sensor fusion pipelines, and autonomous flight systems.',
   },
   {
@@ -811,7 +811,7 @@ function renderAbout() {
           <div class="degree-badge">
             <span class="degree-badge-icon">🎓</span>
             <div class="degree-badge-text">
-              <strong>BSc. Mechatronics Engineering</strong>
+              <strong>BEng (Hons) Mechatronics Engineering</strong>
               Dedan Kimathi University of Technology — Nyeri, Kenya
             </div>
           </div>
@@ -1056,7 +1056,7 @@ function renderContact() {
       <div class="contact-grid">
         <div class="contact-info">
           <h3>Available for Projects</h3>
-          <p>Whether you need a full-time electronics engineer or a specialist for your next hardware project, I'm open to both. Based in Kenya — working globally.</p>
+          <p>Whether you need a full-time electronics engineer or a specialist for your next hardware project, I'm open to both. Based in Nairobi — working globally.</p>
           <div class="clink-list">
             <a href="mailto:${CONFIG.email}" class="clink">
               <div class="clink-icon">✉</div>
@@ -1110,27 +1110,59 @@ function closeModal(id) { document.getElementById(id).classList.remove('open'); 
 function closeBg(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') ['service-modal','project-modal','blog-modal'].forEach(closeModal); });
 
-function gallery(n) {
+/* ── GALLERY ──────────────────────────────────────────────────
+   Builds the photo grid for a project modal.
+   - Slot 0  → assets/images/projects/{id}.jpg   (main card image)
+   - Slot 1  → assets/images/projects/{id}-2.jpg
+   - Slot 2  → assets/images/projects/{id}-3.jpg  ... and so on
+   If the file exists on disk it is shown automatically.
+   If it is missing the slot shows a click-to-upload fallback.
+   After uploading, the new image replaces the placeholder — but
+   note: uploaded images are session-only (browser memory).
+   To make them permanent, save the file to the path shown above.
+──────────────────────────────────────────────────────────── */
+function gallery(projectId, n) {
   let h = '<div class="gallery">';
   for (let i = 0; i < n; i++) {
-    h += `<div class="g-slot" id="gs_${i}">
-      <div class="g-slot-icon">📷</div>
-      <div style="font-size:.6rem">${i===0?'Main photo / render':'Photo '+(i+1)}</div>
-      <div style="font-size:.55rem;opacity:.5;margin-top:2px">Click to upload</div>
-      <input type="file" accept="image/*" onchange="prevImg(this,'gs_${i}')">
-    </div>`;
+    // Build the expected file path for this slot
+    const suffix  = i === 0 ? '' : `-${i + 1}`;
+    const imgPath = `assets/images/projects/${projectId}${suffix}.jpg`;
+    const slotId  = `gs_${projectId}_${i}`;
+    const label   = i === 0 ? 'Main photo / PCB render' : `Photo ${i + 1}`;
+
+    h += `
+      <div class="g-slot g-slot--empty" id="${slotId}">
+        <img
+          src="${imgPath}"
+          alt="${label}"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"
+          onerror="this.style.display='none';document.getElementById('${slotId}').classList.add('g-slot--empty')"
+          onload="document.getElementById('${slotId}').classList.remove('g-slot--empty')"
+        />
+        <div class="g-slot-placeholder">
+          <div class="g-slot-icon">📷</div>
+          <div style="font-size:.6rem">${label}</div>
+          <div style="font-size:.52rem;opacity:.5;margin-top:3px">${imgPath}</div>
+          <div style="font-size:.5rem;opacity:.4;margin-top:1px">Click to upload temporarily</div>
+        </div>
+        <input type="file" accept="image/*" onchange="prevImg(this,'${slotId}')">
+      </div>`;
   }
   return h + '</div>';
 }
-function prevImg(inp, id) {
-  const slot = document.getElementById(id), file = inp.files[0]; if (!file) return;
+
+function prevImg(inp, slotId) {
+  const slot = document.getElementById(slotId);
+  const file = inp.files[0]; if (!file) return;
   const r = new FileReader();
   r.onload = e => {
+    // Find or create the img element inside the slot
     let img = slot.querySelector('img');
-    if (!img) { img = document.createElement('img'); slot.appendChild(img); }
+    if (!img) { img = document.createElement('img'); slot.insertBefore(img, slot.firstChild); }
     img.src = e.target.result;
-    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover';
-    slot.querySelectorAll(':not(img):not(input)').forEach(el => el.style.display = 'none');
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block';
+    img.onerror = null; // prevent the error handler from hiding the uploaded image
+    slot.classList.remove('g-slot--empty');
   };
   r.readAsDataURL(file);
 }
@@ -1171,7 +1203,7 @@ function openProjectModal(id) {
   const d = projectsData.find(p => p.id === id); if (!d) return;
   document.getElementById('prj-tag').textContent = `Project // ${d.title}`;
   document.getElementById('prj-body').innerHTML = `
-    ${gallery(d.photos)}
+    ${gallery(d.id, d.photos)}
     <div class="m-title">${d.title}</div>
     <div class="m-sub">${d.badge} · ${d.category.toUpperCase()}</div>
     <div class="m-desc">${d.fullDesc}</div>

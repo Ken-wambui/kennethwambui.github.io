@@ -572,11 +572,20 @@ body::after {
   text-align:center; position:relative; overflow:hidden; cursor:pointer;
   transition:border-color .2s;
 }
-.g-slot:hover { border-color:rgba(0,212,255,.5); }
+.g-slot--empty { border-color:rgba(0,212,255,.2); }
+.g-slot:not(.g-slot--empty) { border-style:solid; border-color:rgba(0,212,255,.25); }
+.g-slot:hover { border-color:rgba(0,212,255,.55); }
 .g-slot:first-child { grid-column:1/-1; aspect-ratio:16/7; }
 .g-slot-icon { font-size:1.6rem; opacity:.3; }
 .g-slot input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; }
 .g-slot img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+/* Hide placeholder text when image loads; show it when slot is empty */
+.g-slot .g-slot-placeholder { display:none; }
+.g-slot--empty .g-slot-placeholder {
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:5px; width:100%;
+}
 
 /* Modal content */
 .m-title { font-family:'Orbitron',sans-serif; font-size:1.3rem; font-weight:700; color:var(--text); margin-bottom:6px; }
